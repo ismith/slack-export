@@ -390,7 +390,7 @@ if __name__ == "__main__":
     tokenOwnerId = testAuth['user_id']
 
     dryRun = args.dryRun
-    excluded = args.excluded
+    excluded = args.excluded or []
     mimetypes = args.getAttachmentTypes
 
     bootstrapKeyValues()
