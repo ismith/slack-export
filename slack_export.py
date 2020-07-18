@@ -191,7 +191,7 @@ def fetchDirectMessages(dms):
         print(u"Fetching 1:1 DMs with {0}".format(name))
         dmId = name #dmId = dm['id']
         mkdir(dmId)
-        messages = getHistory(slack.im, dm['id'])
+        messages = getHistory(slack.conversations, dm['id'])
         parseMessages( dmId, messages, "im" )
 
 def promptForGroups(groups):
@@ -214,7 +214,7 @@ def fetchGroups(groups):
         mkdir(groupDir)
         messages = []
         print(u"Fetching history for Private Channel / Group DM: {0}".format(group['name']))
-        messages = getHistory(slack.groups, group['id'])
+        messages = getHistory(slack.conversations, group['id'])
         parseMessages( groupDir, messages, 'group' )
 
 # fetch all users for the channel and return a map userId -> userName
@@ -255,7 +255,7 @@ def bootstrapKeyValues():
     users = slack.users.list().body['members']
     print(u"Found {0} Users, including {1}\n"
           .format(len(users),
-                  ' , '.join(sorted([x['profile']['email']for x in filter(lambda y: 'email' in y['profile'].keys(),users) ]))
+                  ' , '.join(sorted([x['profile']['display_name']for x in filter(lambda y: 'display_name' in y['profile'].keys(),users) ]))
                   )
           )
     sleep(1)
